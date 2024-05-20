@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package todo;
+
+option go_package = "./server/pb";
+
+service Tervices {
+    rpc Add(TodoRequest) returns (TodoResponse);
+}
+
+message TodoRequest {
+    int32 id = 1;
+    string text = 2;
+}
+
+message TodoResponse {
+    string status = 1;
+    string data = 2;
+}
