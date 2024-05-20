@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package todo;
 
-option go_package = "./server/pb";
+option go_package = "./pb";
 
 service Tervices {
     rpc Add(TodoRequest) returns (TodoResponse);
