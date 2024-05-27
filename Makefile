@@ -6,3 +6,7 @@ gen-docker-server:
 
 gen-docker-client:
 	@ docker run -v $(PWD):/defs namely/protoc-all -f proto/*.proto -l php -o client/pb --php-source-relative
+
+build:
+	make gen-docker-server
+	docker compose up -d --build
