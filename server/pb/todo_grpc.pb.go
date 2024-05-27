@@ -14,86 +14,86 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// TervicesClient is the client API for Tervices service.
+// TodoServicesClient is the client API for TodoServices service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type TervicesClient interface {
+type TodoServicesClient interface {
 	Add(ctx context.Context, in *TodoRequest, opts ...grpc.CallOption) (*TodoResponse, error)
 }
 
-type tervicesClient struct {
+type todoServicesClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewTervicesClient(cc grpc.ClientConnInterface) TervicesClient {
-	return &tervicesClient{cc}
+func NewTodoServicesClient(cc grpc.ClientConnInterface) TodoServicesClient {
+	return &todoServicesClient{cc}
 }
 
-func (c *tervicesClient) Add(ctx context.Context, in *TodoRequest, opts ...grpc.CallOption) (*TodoResponse, error) {
+func (c *todoServicesClient) Add(ctx context.Context, in *TodoRequest, opts ...grpc.CallOption) (*TodoResponse, error) {
 	out := new(TodoResponse)
-	err := c.cc.Invoke(ctx, "/todo.Tervices/Add", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/todo.TodoServices/Add", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// TervicesServer is the server API for Tervices service.
-// All implementations must embed UnimplementedTervicesServer
+// TodoServicesServer is the server API for TodoServices service.
+// All implementations must embed UnimplementedTodoServicesServer
 // for forward compatibility
-type TervicesServer interface {
+type TodoServicesServer interface {
 	Add(context.Context, *TodoRequest) (*TodoResponse, error)
-	mustEmbedUnimplementedTervicesServer()
+	mustEmbedUnimplementedTodoServicesServer()
 }
 
-// UnimplementedTervicesServer must be embedded to have forward compatible implementations.
-type UnimplementedTervicesServer struct {
+// UnimplementedTodoServicesServer must be embedded to have forward compatible implementations.
+type UnimplementedTodoServicesServer struct {
 }
 
-func (UnimplementedTervicesServer) Add(context.Context, *TodoRequest) (*TodoResponse, error) {
+func (UnimplementedTodoServicesServer) Add(context.Context, *TodoRequest) (*TodoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Add not implemented")
 }
-func (UnimplementedTervicesServer) mustEmbedUnimplementedTervicesServer() {}
+func (UnimplementedTodoServicesServer) mustEmbedUnimplementedTodoServicesServer() {}
 
-// UnsafeTervicesServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to TervicesServer will
+// UnsafeTodoServicesServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TodoServicesServer will
 // result in compilation errors.
-type UnsafeTervicesServer interface {
-	mustEmbedUnimplementedTervicesServer()
+type UnsafeTodoServicesServer interface {
+	mustEmbedUnimplementedTodoServicesServer()
 }
 
-func RegisterTervicesServer(s grpc.ServiceRegistrar, srv TervicesServer) {
-	s.RegisterService(&Tervices_ServiceDesc, srv)
+func RegisterTodoServicesServer(s grpc.ServiceRegistrar, srv TodoServicesServer) {
+	s.RegisterService(&TodoServices_ServiceDesc, srv)
 }
 
-func _Tervices_Add_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _TodoServices_Add_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TodoRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TervicesServer).Add(ctx, in)
+		return srv.(TodoServicesServer).Add(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/todo.Tervices/Add",
+		FullMethod: "/todo.TodoServices/Add",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TervicesServer).Add(ctx, req.(*TodoRequest))
+		return srv.(TodoServicesServer).Add(ctx, req.(*TodoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Tervices_ServiceDesc is the grpc.ServiceDesc for Tervices service.
+// TodoServices_ServiceDesc is the grpc.ServiceDesc for TodoServices service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Tervices_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "todo.Tervices",
-	HandlerType: (*TervicesServer)(nil),
+var TodoServices_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "todo.TodoServices",
+	HandlerType: (*TodoServicesServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Add",
-			Handler:    _Tervices_Add_Handler,
+			Handler:    _TodoServices_Add_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -3,8 +3,9 @@ syntax = "proto3";
 package todo;
 
 option go_package = "./pb";
+option php_metadata_namespace = "GPBMetadata";
 
-service Tervices {
+service TodoServices {
     rpc Add(TodoRequest) returns (TodoResponse);
 }
 

@@ -11,7 +11,7 @@ import (
 )
 
 type server struct {
-	pb.UnimplementedTervicesServer
+	pb.UnimplementedTodoServicesServer
 }
 
 func (s *server) Add(
@@ -33,7 +33,7 @@ func main() {
 	s := grpc.NewServer()
 	reflection.Register(s)
 
-	pb.RegisterTervicesServer(s, &server{})
+	pb.RegisterTodoServicesServer(s, &server{})
 	if err := s.Serve(listener); err != nil {
 		log.Fatalln("Failed to serve", err)
 	}
