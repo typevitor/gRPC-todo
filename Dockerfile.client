@@ -1,0 +1,33 @@
+FROM php:8.3-cli
+
+ARG GRPC_VERSION=1.64.0
+
+RUN apt-get update -y && \
+    apt-get upgrade -y && \ 
+    apt-get install -y build-essential zip libz-dev cmake
+
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
+RUN pecl install grpc && pecl install protobuf
+
+RUN echo starting && \
+    docker-php-ext-enable grpc && \
+    docker-php-ext-enable protobuf
+
+# RUN git clone -b v${GRPC_VERSION} https://github.com/grpc/grpc && \
+#     cd grpc && git submodule update --init && \
+#     mkdir cmake/build && cd cmake/build && \
+#     cmake ../.. && make protoc grpc_php_plugin
+
+# ENV PATH "/grpc/cmake/build:${PATH}"
+# ENV PATH "/grpc/cmake/build/third_party/protobuf:${PATH}"
+
+WORKDIR /var/www
+
+COPY ./client /var/www
+
+COPY ./proto /var/www/proto
+
+RUN composer install
+
+CMD ["tail", "-f", "/dev/null"]

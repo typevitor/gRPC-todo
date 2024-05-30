@@ -15,16 +15,18 @@ services:
       - '8081:8081'
     networks:
       - grpc-test
-  # client:
-  #   container_name: grpc-client
-  #   build:
-  #     context: ./src/client
-  #     dockerfile: ./src/client/Dockerfile
-  #     args:
-  #       WWWGROUP: '${WWWGROUP:-1001}'
-  #   image: grpc-client
-  #   networks:
-  #     - grpc-test
+    volumes:
+    - './client:/var/www'
+  client:
+    container_name: grpc-client
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+      args:
+        WWWGROUP: '${WWWGROUP:-1001}'
+    image: grpc-client
+    networks:
+      - grpc-test
 
 networks:
   grpc-test:

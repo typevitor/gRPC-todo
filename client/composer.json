@@ -1,0 +1,22 @@
+{
+    "name": "vitor/client",
+    "description": "client gRPC study case",
+    "type": "project",
+    "require": {
+        "grpc/grpc": "^1.57",
+        "google/protobuf": "^4.26"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vitor\\Client\\": "src/",
+            "Todo\\": "pb/Todo",
+            "GPBMetadata\\": "pb/GPBMetadata"
+        }
+    },
+    "authors": [
+        {
+            "name": "Vitor A Leal",
+            "email": "vitorlealeng@gmail.com"
+        }
+    ]
+}

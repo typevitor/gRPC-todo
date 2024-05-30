@@ -10,4 +10,5 @@ gen-docker-client:
 
 build:
 	make gen-docker-server
+	make gen-docker-client
 	docker compose up -d --build
