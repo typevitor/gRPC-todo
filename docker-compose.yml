@@ -9,14 +9,8 @@ services:
       args:
         WWWGROUP: '${WWWGROUP:-1001}'
     image: grpc-server
-    extra_hosts:
-      - 'host.docker.internal:host-gateway'
-    ports:
-      - '8081:8081'
     networks:
       - grpc-test
-    volumes:
-    - './client:/var/www'
   client:
     container_name: grpc-client
     build:
@@ -25,6 +19,8 @@ services:
       args:
         WWWGROUP: '${WWWGROUP:-1001}'
     image: grpc-client
+    volumes:
+    - './client:/var/www/html'
     networks:
       - grpc-test
 

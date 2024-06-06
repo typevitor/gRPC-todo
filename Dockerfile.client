@@ -8,10 +8,10 @@ RUN apt-get update -y && \
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-RUN pecl install grpc && pecl install protobuf
+RUN pecl install grpc && docker-php-ext-enable grpc
 
 RUN echo starting && \
-    docker-php-ext-enable grpc && \
+    pecl install protobuf\
     docker-php-ext-enable protobuf
 
 # RUN git clone -b v${GRPC_VERSION} https://github.com/grpc/grpc && \
@@ -22,11 +22,13 @@ RUN echo starting && \
 # ENV PATH "/grpc/cmake/build:${PATH}"
 # ENV PATH "/grpc/cmake/build/third_party/protobuf:${PATH}"
 
-WORKDIR /var/www
+USER www-data
 
-COPY ./client /var/www
+WORKDIR /var/www/html
 
-COPY ./proto /var/www/proto
+COPY ./client /var/www/html
+
+COPY ./proto /var/www/html/proto
 
 RUN composer install
 
